@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.DetalleObjetoActivity"
+    tools:showIn="@layout/activity_detalle_objeto">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nombre"
+            android:id="@+id/textView2"
+            android:textSize="17dp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView5"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/linea_final"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/textViewNombreDetalle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Categoría"
+            android:id="@+id/textView3"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView6"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/linea_final"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/textViewCategoriaDetalle" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView10"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/linea_final"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Recompensa: "
+                android:gravity="center"
+                android:id="@+id/textView8"
+                android:textSize="17dp"
+                android:layout_weight="0"/>
+
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/textViewRecompensaDetalle" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perdido"
+                android:id="@+id/checkBoxDetalle"
+                android:layout_weight="1"
+                />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView11"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/linea_final"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Mensajes relacionados"
+                android:id="@+id/textView5"
+                android:layout_marginTop="10dp"
+                android:textSize="17dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/linea_final"
+                android:layout_marginBottom="5dp"/>
+
+            <ListView
+                android:id="@+id/listViewMensajes"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</android.support.v4.widget.NestedScrollView>

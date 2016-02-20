@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_objetos"
+            android:icon="@drawable/ic_objects"
+            android:title="Objetos" />
+
+        <item
+            android:id="@+id/nav_qr"
+            android:icon="@drawable/qr"
+            android:title="Escanear QR" />
+    </group>
+
+    <item android:title="Sesión">
+        <menu>
+            <item
+                android:id="@+id/nav_cerrar"
+                android:icon="@drawable/ic_cerrar_sesion"
+                android:title="Salir" />
+        </menu>
+    </item>
+
+</menu>

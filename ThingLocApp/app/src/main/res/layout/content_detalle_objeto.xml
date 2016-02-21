@@ -134,10 +134,10 @@
                 android:src="@drawable/linea_final"
                 android:layout_marginBottom="5dp"/>
 
-            <ListView
-                android:id="@+id/listViewMensajes"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_mensajes"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
                 />
         </LinearLayout>
 

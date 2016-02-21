@@ -236,7 +236,6 @@ public class AnyadirObjectActivity extends AppCompatActivity implements Spinner.
 
     }
 
-    //Por aquí voy...!
     public String url_categoria(String num) {
         return Servicio.URL_BASE + "api/categorias/" + num + "/";
     }

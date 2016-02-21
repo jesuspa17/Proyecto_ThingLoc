@@ -28,7 +28,6 @@ public class ObjetosFragment extends Fragment {
 
     private RecyclerView recyclerView;
     ObjetosAdapter objetosAdapter;
-
     String token;
 
     public ObjetosFragment() {
@@ -47,14 +46,18 @@ public class ObjetosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_objetos,container,false);
+
+        //Inicializo los elementos de la UI
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewObjetos);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        //Obtengo el token almacenado en preferencias
         Preferencias.iniciarPreferencias(getContext());
         token = Preferencias.preferencias.getString("token", null);
 
+        //Obtengo mis datos para obtener mi id y lanzar la consulta que me devuleva los objetos asociados a mí
         new ObtenerMisDatosTask().execute();
 
         return v;
@@ -88,6 +91,7 @@ public class ObjetosFragment extends Fragment {
         @Override
         protected void onPostExecute(Me me) {
             super.onPostExecute(me);
+            //Lanzo la consulta que me devuelve la lista con los objetos asociados a mí
             new ObtenerObjetosTask().execute(me.getUsername());
         }
     }
@@ -124,6 +128,8 @@ public class ObjetosFragment extends Fragment {
             super.onPostExecute(objeto);
 
             if(objeto!=null){
+                //Guardo el url del usuario obtenido y el de la categoria para posterior uso en la aplicación
+                //y adapto el recycler con la lista obtenida de la consulta
                 Preferencias.editor.putString("url_usuario",objeto.getResults().get(0).getUsuario());
                 Preferencias.editor.putString("url_categoria",objeto.getResults().get(0).getCategoria());
                 Preferencias.editor.apply();

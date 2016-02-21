@@ -25,13 +25,14 @@ public interface ObjetosApi {
     @GET("/api/objetos")
     Call<Objeto> obtenerObjetos(@Query(value="search") String user);
 
+    //No funciona
     @Headers("{Content-Type: multipart/form-data}")
     @Multipart
     @POST("/api/objetos/")
     Call<String> addObject(     @Part("nombre") RequestBody nombre,
                                 @Part("recompensa") RequestBody recompensa,
                                 @Part("perdido")RequestBody perdido,
-                                @Part("foto\"; filename=\"image.png\" ") RequestBody file,
+                                @Part("foto\"; filename=\"image.jpg\" ") RequestBody file,
                                 @Part("coordenadas")RequestBody coordenadas,
                                 @Part("usuario") RequestBody usuario,
                                 @Part("categoria") RequestBody categoria);

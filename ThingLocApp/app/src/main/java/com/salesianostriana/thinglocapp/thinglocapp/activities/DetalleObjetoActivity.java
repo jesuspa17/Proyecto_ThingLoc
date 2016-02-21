@@ -1,26 +1,27 @@
 package com.salesianostriana.thinglocapp.thinglocapp.activities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.salesianostriana.thinglocapp.thinglocapp.interfaces.CategoriasApi;
-import com.salesianostriana.thinglocapp.thinglocapp.interfaces.MensajesApi;
-import com.salesianostriana.thinglocapp.thinglocapp.interfaces.ObjetosApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
-import com.salesianostriana.thinglocapp.thinglocapp.adapters.MensajesAdapter;
+import com.salesianostriana.thinglocapp.thinglocapp.adapters.MensajesRecyclerAdapter;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.CategoriasApi;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.MensajesApi;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.ObjetosApi;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.Objeto.Objeto;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.categoria.ResultCategoria;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.mensajes.Mensaje;
@@ -38,7 +39,8 @@ public class DetalleObjetoActivity extends AppCompatActivity {
     TextView nombre, categoria, recompensa;
     CheckBox checkBox;
     AppBarLayout appBarLayout;
-    ListView listViewMensajes;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
 
     /////////////////////////////////////
@@ -64,7 +66,13 @@ public class DetalleObjetoActivity extends AppCompatActivity {
         categoria = (TextView) findViewById(R.id.textViewCategoriaDetalle);
         recompensa = (TextView) findViewById(R.id.textViewRecompensaDetalle);
         checkBox = (CheckBox) findViewById(R.id.checkBoxDetalle);
-        listViewMensajes = (ListView) findViewById(R.id.listViewMensajes);
+
+
+        //Inicializo los elementos del recyler que contendrá los mensajes
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_mensajes);
+        recyclerView.setHasFixedSize(true);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         //Inicializo el Bundle por el que obtendré el id del objeto que vendrá desde el MainActivity
         //al pulsar sobre algún elemento de la lista
@@ -88,8 +96,9 @@ public class DetalleObjetoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(new Intent(DetalleObjetoActivity.this,EnviarMensajeActivity.class));
+                i.putExtra("id_objeto",id_objeto);
+                startActivity(i);
             }
         });
     }
@@ -124,7 +133,7 @@ public class DetalleObjetoActivity extends AppCompatActivity {
             for(int i= 0;i<obj.getResults().size();i++){
                 cat = obj.getResults().get(i).getCategoria();
                 nombreInsert = obj.getResults().get(i).getNombre();
-                id_categoria = cat.substring(cat.length() - 2, cat.length() - 1);
+                id_categoria = cat;
                 recompensaInsert  = obj.getResults().get(i).getRecompensa();
                 perdidoInsert = obj.getResults().get(i).getPerdido();
                 imagenInsert = obj.getResults().get(i).getFoto();
@@ -180,7 +189,12 @@ public class DetalleObjetoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Mensaje mensaje) {
             super.onPostExecute(mensaje);
-            listViewMensajes.setAdapter(new MensajesAdapter(DetalleObjetoActivity.this,mensaje.getResults()));
+
+            for(int i = 0;i<mensaje.getResults().size();i++){
+                Log.i("MENSAJE_OBTENIDO0",mensaje.getResults().get(i).getComentario());
+            }
+            adapter = new MensajesRecyclerAdapter(mensaje.getResults());
+            recyclerView.setAdapter(adapter);
         }
     }
 }

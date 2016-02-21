@@ -5,6 +5,7 @@ import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.LoginUser;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Logout;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Me;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.RegistroUser;
+import com.salesianostriana.thinglocapp.thinglocapp.pojos.users.Users;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.users.Usuario;
 
 import retrofit.Call;
@@ -59,4 +60,11 @@ public interface RestAuthApi {
      */
     @GET("/api/users/{id}")
     Call<Usuario> obtenerUnUsuario(@Path("id")String id);
+
+    /**
+     * Obtiene todos los usuarios
+     * @return
+     */
+    @GET("/api/users/")
+    Call<Users> obtenerTodosUsuarios();
 }

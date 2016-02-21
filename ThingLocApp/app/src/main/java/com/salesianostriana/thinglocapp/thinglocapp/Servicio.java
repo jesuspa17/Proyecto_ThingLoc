@@ -17,7 +17,7 @@ import retrofit.Retrofit;
 public class Servicio {
 
     //192.168.65.2
-    final public static String URL_BASE = "http:/192.168.65.1:8000/";
+    final public static String URL_BASE = "http://192.168.65.1:8000/";
 
     /**
      * Servirá para inicializar el servicio que nos permitirá conectarnos a la API.

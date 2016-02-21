@@ -26,17 +26,25 @@ import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.adapters.CategoriasAdapter;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.CategoriasApi;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.ObjetosApi;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.Objeto.AddObject;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.categoria.Categoria;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.categoria.ResultCategoria;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.RequestBody;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import retrofit.Call;
+import retrofit.Callback;
 import retrofit.Response;
+import retrofit.Retrofit;
+
 
 public class AnyadirObjectActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
@@ -94,14 +102,53 @@ public class AnyadirObjectActivity extends AppCompatActivity implements Spinner.
                 Boolean per = perdido.isChecked();
                 String cat = url_categoria(String.valueOf(id_categoria));
                 String usr = Preferencias.preferencias.getString("url_usuario", null);
-                String nom_imagen = ruta_imagen.split("/")[ruta_imagen.split("/").length - 1];
 
 
-                if (nom.isEmpty() || rec.isEmpty() || cat.isEmpty() || nom_imagen.isEmpty() || ruta_imagen.isEmpty()) {
+
+                if (nom.isEmpty() || rec.isEmpty() || cat.isEmpty() || ruta_imagen.isEmpty()) {
                     Toast.makeText(AnyadirObjectActivity.this, "Por favor, asegurese de rellenar todos los campos del formulario", Toast.LENGTH_SHORT).show();
                 } else {
 
+                     //String nom_imagen = ruta_imagen.split("/")[ruta_imagen.split("/").length - 1];
                     //Aquí iría el trozo de código que permitiría dar de alta un objeto.
+
+                    Log.i("CATEGORIA", "CATEGORIA: " + id_categoria);
+                    Log.i("IMAGEN", ruta_imagen);
+                    Log.i("PERDIDO",String.valueOf(per));
+
+                    ObjetosApi service = Servicio.instanciarServicio(ObjetosApi.class,token);
+
+                    RequestBody nombre =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), nom);
+                    RequestBody recompensa =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), rec);
+                    RequestBody perdido =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(per));
+                    File file = new File(ruta_imagen);
+                    RequestBody foto =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+                    RequestBody coordenadas =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), "0,0");
+
+                    RequestBody usuario =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), usr);
+
+                    RequestBody categoria =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), cat);
+
+                    Call<String> call = service.addObject(nombre,recompensa,perdido,foto,coordenadas,usuario,categoria);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Response<String> response, Retrofit retrofit) {
+                            Toast.makeText(AnyadirObjectActivity.this, "Objeto creado correctamente", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
 
                     AddObject nuevo_objeto = new AddObject();
                     nuevo_objeto.setNombre(nom);
@@ -111,8 +158,7 @@ public class AnyadirObjectActivity extends AppCompatActivity implements Spinner.
                     nuevo_objeto.setCategoria(cat);
                     nuevo_objeto.setUsuario(usr);
                     nuevo_objeto.setCoordenadas("0,0");
-                    Log.i("CATEGORIA", "CATEGORIA: " + id_categoria);
-                    Log.i("IMAGEN", ruta_imagen);
+
                     //new AddObjectTask().execute(nuevo_objeto);
 
                 }
@@ -231,7 +277,7 @@ public class AnyadirObjectActivity extends AppCompatActivity implements Spinner.
 
         @Override
         protected Categoria doInBackground(Void... params) {
-            Call<Categoria> categoriaCall = Servicio.instanciarServicio(token).obtenerCategorias();
+            Call<Categoria> categoriaCall = Servicio.instanciarServicio(CategoriasApi.class,token).obtenerCategorias();
             Response<Categoria> categoriaResponse = null;
 
             try {

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.salesianostriana.thinglocapp.thinglocapp.R;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.RestAuthApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Key;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.RegistroUser;
@@ -68,7 +69,7 @@ public class RegistroActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(RegistroUser... params) {
             if(params!=null){
-                Call<Key> keyCall = Servicio.instanciarServicio("").registrarse(params[0]);
+                Call<Key> keyCall = Servicio.instanciarServicio(RestAuthApi.class,"").registrarse(params[0]);
                 Response<Key> keyResponse = null;
 
                 try {

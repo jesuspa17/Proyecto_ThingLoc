@@ -21,6 +21,7 @@ import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.fragments.ObjetosFragment;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.RestAuthApi;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Logout;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Me;
 
@@ -106,11 +107,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_objetos) {
-
+            transicionFragment(new ObjetosFragment());
         } else if (id == R.id.nav_qr) {
-
             startActivity(new Intent(MainActivity.this,DecoderActivity.class));
-
         } else if (id == R.id.nav_cerrar) {new CerrarSesionTask().execute();}
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Me doInBackground(String... params) {
             if(params!=null){
-                Call<Me> meCall = Servicio.instanciarServicio(params[0]).obtenerMisDatos();
+                Call<Me> meCall = Servicio.instanciarServicio(RestAuthApi.class,params[0]).obtenerMisDatos();
                 Response<Me> response = null;
 
                 try {
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Integer doInBackground(Void... params) {
-            Call<Logout> call = Servicio.instanciarServicio(token).cerrarSesion();
+            Call<Logout> call = Servicio.instanciarServicio(RestAuthApi.class,token).cerrarSesion();
             Response<Logout> response = null;
             try {
                 response = call.execute();

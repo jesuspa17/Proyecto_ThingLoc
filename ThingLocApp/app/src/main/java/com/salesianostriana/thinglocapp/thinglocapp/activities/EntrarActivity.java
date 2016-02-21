@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.RestAuthApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Key;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.LoginUser;
@@ -86,7 +87,7 @@ public class EntrarActivity extends AppCompatActivity {
         protected Key doInBackground(LoginUser... params) {
             if(params!=null){
 
-                Call<Key> keyCall = Servicio.instanciarServicio("").loguearse(params[0]);
+                Call<Key> keyCall = Servicio.instanciarServicio(RestAuthApi.class,"").loguearse(params[0]);
                 Response<Key> keyResponse = null;
                 try {
                     keyResponse = keyCall.execute();

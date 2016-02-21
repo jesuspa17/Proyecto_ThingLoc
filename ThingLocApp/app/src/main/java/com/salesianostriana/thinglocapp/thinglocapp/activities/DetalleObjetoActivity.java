@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.CategoriasApi;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.MensajesApi;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.ObjetosApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
@@ -96,7 +99,7 @@ public class DetalleObjetoActivity extends AppCompatActivity {
 
         @Override
         protected Objeto doInBackground(Integer... params) {
-            Call<Objeto> call = Servicio.instanciarServicio(token).obtenerObjetos(String.valueOf(params[0]));
+            Call<Objeto> call = Servicio.instanciarServicio(ObjetosApi.class,token).obtenerObjetos(String.valueOf(params[0]));
             Response<Objeto> res = null;
 
             try {
@@ -136,7 +139,7 @@ public class DetalleObjetoActivity extends AppCompatActivity {
 
         @Override
         protected ResultCategoria doInBackground(String... params) {
-            Call<ResultCategoria> call = Servicio.instanciarServicio(token).obtenerUnaCategoria(params[0]);
+            Call<ResultCategoria> call = Servicio.instanciarServicio(CategoriasApi.class,token).obtenerUnaCategoria(params[0]);
             Response<ResultCategoria> res = null;
             try {
                 res = call.execute();
@@ -164,7 +167,7 @@ public class DetalleObjetoActivity extends AppCompatActivity {
 
         @Override
         protected Mensaje doInBackground(String... params) {
-            Call<Mensaje> call = Servicio.instanciarServicio(token).obtenerMensajes(params[0]);
+            Call<Mensaje> call = Servicio.instanciarServicio(MensajesApi.class,token).obtenerMensajes(params[0]);
             Response<Mensaje> res = null;
             try {
                 res = call.execute();

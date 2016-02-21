@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.ObjetosApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.RestAuthApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.adapters.ObjetosAdapter;
-import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Me;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.Objeto.Objeto;
+import com.salesianostriana.thinglocapp.thinglocapp.pojos.rest_auth.Me;
 
 import java.io.IOException;
 
@@ -63,7 +65,7 @@ public class ObjetosFragment extends Fragment {
         @Override
         protected Me doInBackground(Void... params) {
             if(params!=null){
-                Call<Me> meCall = Servicio.instanciarServicio(token).obtenerMisDatos();
+                Call<Me> meCall = Servicio.instanciarServicio(RestAuthApi.class,token).obtenerMisDatos();
                 Response<Me> response = null;
 
                 try {
@@ -95,7 +97,7 @@ public class ObjetosFragment extends Fragment {
         @Override
         protected Objeto doInBackground(String... params) {
             if(params!=null){
-                Call<Objeto> objetoCall = Servicio.instanciarServicio(token).obtenerObjetos(params[0]);
+                Call<Objeto> objetoCall = Servicio.instanciarServicio(ObjetosApi.class,token).obtenerObjetos(params[0]);
                 Response<Objeto> objetoResponse = null;
 
                 try {

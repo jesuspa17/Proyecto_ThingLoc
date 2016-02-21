@@ -1,5 +1,6 @@
 package com.salesianostriana.thinglocapp.thinglocapp;
 
+
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -8,6 +9,7 @@ import java.io.IOException;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+
 
 /**
  * Created by Jesus Pallares on 16/02/2016.
@@ -21,7 +23,7 @@ public class Servicio {
      * Servirá para inicializar el servicio que nos permitirá conectarnos a la API.
      * @return el serivicio creado.
      */
-    public static ThingLocApi instanciarServicio(final String token) {
+    public static <S> S instanciarServicio(Class<S> clase, final String token) {
 
         Interceptor interceptor = new Interceptor() {
             @Override
@@ -42,9 +44,7 @@ public class Servicio {
                 .client(client)
                 .build();
 
-        ThingLocApi service = retrofit.create(ThingLocApi.class);
-
-        return service;
+        return retrofit.create(clase);
     }
 
 }

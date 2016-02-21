@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.salesianostriana.thinglocapp.thinglocapp.Preferencias;
 import com.salesianostriana.thinglocapp.thinglocapp.R;
+import com.salesianostriana.thinglocapp.thinglocapp.interfaces.RestAuthApi;
 import com.salesianostriana.thinglocapp.thinglocapp.Servicio;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.mensajes.ResultMensaje;
 import com.salesianostriana.thinglocapp.thinglocapp.pojos.users.Usuario;
@@ -92,7 +93,7 @@ public class MensajesAdapter extends ArrayAdapter<ResultMensaje>{
     private class GetUnUsuario extends AsyncTask<String, Void, Usuario>{
         @Override
         protected Usuario doInBackground(String... params) {
-            Call<Usuario> call = Servicio.instanciarServicio(Preferencias.preferencias.getString("token",null)).obtenerUnUsuario(params[0]);
+            Call<Usuario> call = Servicio.instanciarServicio(RestAuthApi.class,Preferencias.preferencias.getString("token",null)).obtenerUnUsuario(params[0]);
             Response<Usuario> res = null;
             try {
                 res = call.execute();
